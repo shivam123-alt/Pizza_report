@@ -116,6 +116,7 @@ C.Weekly Trend For Orders
     LIMIT 5;
 ## Data Cleaning
 Pizza size category we have in our database is abbreviated and for dashboard we need it in full expanded form. For eg. L= large, M= medium etc, so we will create an alias to temporary change its name in required format.
+
 <img width="371" height="312" alt="2025-07-25 (1)" src="https://github.com/user-attachments/assets/7b40b179-a913-4d1a-8944-ed082d7b8e83" />
 
 # Build Dashboard or a Report using Tableau
