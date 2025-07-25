@@ -1,11 +1,12 @@
 # Pizza_report
 ## Table of Contents
-- Problem Statement
+Problem Statement 
 - Data Analysis using MySQL
 - Data Cleaning
-- Build Dashboard or a Report using Tableau
+- Build Dashboard Or a Report using Tableau
 - Tools, Software and Libraries
 - References
+
 ## Problem Statement
 ## KPI’s REQUIREMENT
 We need to analyze key indicators for our pizza sales data to gain insights into our business performance. Specifically, we want to calculate the following metrics:
@@ -142,11 +143,11 @@ Created a comprehensive dashboard in Tableau featuring key metrics and charts, i
 <img width="867" height="481" alt="2025-07-24 (7)" src="https://github.com/user-attachments/assets/4403c5dc-228d-4d87-9ddd-f731d4989c1e" />
 
 ## Tools, Software, and Libraries
-· MySQL Workbench 8.0 CE
+ - MySQL Workbench 8.0 CE
        for data analysis and storage
-· Tableau Public 2025.2.0
+ - Tableau Public 2025.2.0
       for dashboard creation and visualization
-· Excel version 2024
+ - Excel version 2024
       for initial data exploration and manipulation
 ## Reference
 -	https://www.youtube.com/watch?v=lrl0vz-p-yc
