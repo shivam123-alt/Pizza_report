@@ -1,4 +1,4 @@
-# Pizza_report
+# Pizza-Analytics-Dashboard-Using-Tableau
 ## Table of Contents
 Problem Statement 
 - Data Analysis using MySQL
