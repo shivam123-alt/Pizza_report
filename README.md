@@ -38,83 +38,53 @@ Utilized MySQL for data extraction and calculation of key metrics such as Total 
 
 ## ANALYSIS OF DIFFERENT SQL STATEMENT ON DATA BASE
 A. KPI’s
-  1. Total Revenue:
-     SELECT SUM(total_price)  AS Total_Revenue FROM pizza_sales;
+1. Total Revenue:
+     - SELECT SUM(total_price)  AS Total_Revenue FROM pizza_sales;
      
-  2. Average Order Value:
-       SELECT SUM(total_price) / COUNT(DISTINCT order_id)  AS Avg_Order_Value
-       FROM pizza_sales;
-  3. Total Pizza Sold:
-       SELECT SUM(quantity) AS Total_Pizza_Sold FROM pizza_sales;
-  4. Total Order:
-      SELECT COUNT(DISTINCT order_id) AS Total_Orders FROM pizza_sales;
-  5. Average Pizza Per Order:
-      SELECT CAST(SUM(quantity) AS DECIMAL(10,2)) / 
+2. Average Order Value:
+     - SELECT SUM(total_price) / COUNT(DISTINCT order_id)  AS Avg_Order_Value FROM pizza_sales;
+
+3. Total Pizza Sold:
+     - SELECT SUM(quantity) AS Total_Pizza_Sold FROM pizza_sales;
+       
+4. Total Order:
+     - SELECT COUNT(DISTINCT order_id) AS Total_Orders FROM pizza_sales;
+5. Average Pizza Per Order:
+     - SELECT CAST(SUM(quantity) AS DECIMAL(10,2)) / 
       CAST(COUNT(DISTINCT order_id) AS DECIMAL (10,2))
       AS Avg_Pizza_Per_Order FROM pizza_sales;
-B.Hourly Trend For Pizza Sold
-       SELECT HOUR(order_time) AS order_hour,
-       SUM(quantity) AS Total_Pizza_Sold
-       FROM pizza_sales
-       GROUP BY HOUR(order_time)
-       ORDER BY HOUR(order_time);
-C.Weekly Trend For Orders 
-      SELECT WEEK(STR_TO_DATE(order_date, '%m/%d/%Y'), 3) AS week_number,
-      DATE_FORMAT(STR_TO_DATE('1/1/2015', '%m/%d/%Y'), '%x') AS order_year, 
-      COUNT(DISTINCT order_id) AS total_orders
-      FROM pizza_sales
-      GROUP BY week_number, order_year
-      ORDER BY week_number, order_year;
+B. Hourly Trend For Pizza Sold
+   - SELECT HOUR(order_time) AS order_hour,SUM(quantity) AS Total_Pizza_Sold FROM pizza_sales GROUP BY HOUR(order_time) ORDER BY HOUR(order_time);
 
- D.	Percentage Of Sales by Pizza Category
-     SELECT pizza_category, SUM(total_price) AS Total_Sales, SUM(total_price) * 100 /
-     (SELECT SUM(total_price) FROM pizza_sales WHERE MONTH(STR_TO_DATE(order_date, '%m/%d/%Y')) = 1)  AS PCT
-     FROM pizza_sales
-     WHERE MONTH(STR_TO_DATE(order_date, '%m/%d/%Y')) = 1
-     GROUP BY pizza_category;
+C. Weekly Trend For Orders 
+   - SELECT WEEK(STR_TO_DATE(order_date, '%m/%d/%Y'), 3) AS week_number,DATE_FORMAT(STR_TO_DATE('1/1/2015', '%m/%d/%Y'), '%x') AS order_year, COUNT(DISTINCT order_id) AS total_orders FROM pizza_sales GROUP BY week_number, order_year ORDER BY week_number, order_year;
 
- E.	% of Sales by Pizza Size
-    SELECT pizza_size, CAST(SUM(total_price) AS DECIMAL(10,2)) AS Total_Sales, CAST(SUM(total_price) * 100 /
-    (SELECT SUM(total_price) FROM pizza_sales) AS DECIMAL(10,2)) AS PCT
-    FROM pizza_sales
-    GROUP BY pizza_size
-    ORDER BY PCT DESC;
-    
- F.	Top 5 Pizza by Revenue
+D.	Percentage Of Sales by Pizza Category
+    - SELECT pizza_category, SUM(total_price) AS Total_Sales, SUM(total_price) * 100 /(SELECT SUM(total_price) FROM pizza_sales WHERE MONTH(STR_TO_DATE(order_date, '%m/%d/%Y')) = 1)  AS PCT FROM pizza_sales WHERE MONTH(STR_TO_DATE(order_date, '%m/%d/%Y')) = 1 GROUP BY pizza_category;
+
+E.	% of Sales by Pizza Size
+  - SELECT pizza_size, CAST(SUM(total_price) AS DECIMAL(10,2)) AS Total_Sales, CAST(SUM(total_price) * 100 /(SELECT SUM(total_price) FROM pizza_sales) AS DECIMAL(10,2)) AS PCT FROM pizza_sales GROUP BY pizza_size ORDER BY PCT DESC;
+ 
+F.	Top 5 Pizza by Revenue
     SELECT pizza_name, SUM(total_price) AS Total_Revenue FROM pizza_sales
     GROUP BY pizza_name
     ORDER BY Total_Revenue DESC
     LIMIT 5;
 
- G.	Bottom 5 by Revenue
-    SELECT pizza_name, SUM(total_price) AS Total_Revenue FROM pizza_sales
-    GROUP BY pizza_name
-    ORDER BY Total_Revenue
-    LIMIT 5;
-    
- H.	Top 5 Pizza by Quantity
-    SELECT pizza_name, SUM(quantity) AS Total_quantity FROM pizza_sales
-    GROUP BY pizza_name
-    ORDER BY Total_quantity DESC
-    LIMIT 5;
+G. Bottom 5 by Revenue
+  - SELECT pizza_name, SUM(total_price) AS Total_Revenue FROM pizza_sales GROUP BY pizza_name ORDER BY Total_Revenue LIMIT 5;
 
- I.	Bottom 5 Pizza by Quantity
-    SELECT pizza_name, SUM(quantity) AS Total_quantity FROM pizza_sales
-    GROUP BY pizza_name
-    ORDER BY Total_quantity 
-    LIMIT 5;
+H. Top 5 Pizza by Quantity
+  - SELECT pizza_name, SUM(quantity) AS Total_quantity FROM pizza_sales GROUP BY pizza_name ORDER BY Total_quantity DESC LIMIT 5;
 
- J.	Top 5 Pizza by Order_id
-    SELECT pizza_name, COUNT(DISTINCT order_id) AS Total_orders FROM pizza_sales
-    GROUP BY pizza_name
-    ORDER BY Total_orders DESC 
-    LIMIT 5;
+I. Bottom 5 Pizza by Quantity
+  - SELECT pizza_name, SUM(quantity) AS Total_quantity FROM pizza_sales GROUP BY pizza_name ORDER BY Total_quantity LIMIT 5;
 
- K.	Bottom 5 Pizza by Order_id
-    SELECT pizza_name, COUNT(DISTINCT order_id) AS Total_orders FROM pizza_sales
-    GROUP BY pizza_name
-    ORDER BY Total_orders 
-    LIMIT 5;
+J.Top 5 Pizza by Order_id
+  - SELECT pizza_name, COUNT(DISTINCT order_id) AS Total_orders FROM pizza_sales GROUP BY pizza_name ORDER BY Total_orders DESC LIMIT 5;
+
+K. Bottom 5 Pizza by Order_id
+  - SELECT pizza_name, COUNT(DISTINCT order_id) AS Total_orders FROM pizza_sales GROUP BY pizza_name ORDER BY Total_orders LIMIT 5;
 ## Data Cleaning
 Pizza size category we have in our database is abbreviated and for dashboard we need it in full expanded form. For eg. L= large, M= medium etc, so we will create an alias to temporary change its name in required format.
 
